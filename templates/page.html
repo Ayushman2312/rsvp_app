@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVP - Completeboxevents</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #111;
+            background-color: #fff;
+        }
+        
+        .bg-light-gray {
+            background-color: #f5f5f7;
+        }
+        
+        .neon-green-badge {
+            background-color: #c7fb55;
+            color: #000;
+            padding: 3px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .try-free-btn {
+            background: linear-gradient(to bottom, #1e1e1e, #000000);
+            border-radius: 9999px;
+            color: white;
+            padding: 10px 16px;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 500;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .plus-icon {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .grid-icon {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 2px;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .grid-cell {
+            background-color: #eee;
+            border-radius: 1px;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            width: 110px;
+            height: 110px;
+            margin: 0 8px;
+            position: relative;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+        
+        .api-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 16px;
+            border-radius: 20px;
+            background-color: transparent;
+            font-weight: 500;
+            color: #333;
+            border-left: 1px solid #333;
+            border-right: 1px solid #333;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+        
+        .get-started-btn {
+            background-color: #000;
+            color: white;
+            border-radius: 9999px;
+            padding: 10px 20px;
+            font-weight: 300;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .get-started-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+        
+        .benefit-item {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .feature-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            width: 100px;
+        }
+        
+        .feature-icon {
+            background-color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .icon-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: black;
+            color: white;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-bar {
+            background-color: #f5f5f5;
+            border-radius: 999px;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            position: relative;
+            margin: 0 auto 30px;
+        }
+        
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        /* Menu toggle button styles */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            cursor: pointer;
+            z-index: 100;
+            position: relative;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .bar {
+            height: 2px;
+            width: 100%;
+            background-color: #000;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* Close icon styles */
+        .close-icon {
+            display: none;
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            z-index: 101;
+        }
+        
+        .close-icon::before,
+        .close-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #000;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .close-icon::before {
+            transform: rotate(45deg);
+        }
+        
+        .close-icon::after {
+            transform: rotate(-45deg);
+        }
+        
+        .close-icon.active {
+            display: block;
+        }
+        
+        /* Active state for menu toggle */
+        .menu-toggle.active {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+            position: absolute;
+        }
+        
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: translateY(8px) rotate(-45deg);
+            position: absolute;
+        }
+        
+        /* Mobile menu overlay */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 90;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(-20px);
+        }
+        
+        .mobile-menu.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            margin-top: -40px; /* Added to move links up */
+        }
+        
+        .mobile-menu-link {
+            font-size: 24px;
+            font-weight: 500;
+            color: #000;
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #000;
+            transition: width 0.3s ease;
+        }
+        
+        .mobile-menu-link:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-footer {
+            position: absolute;
+            bottom: 60px; /* Increased from 40px to 60px to move buttons up */
+            display: flex;
+            gap: 16px;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 1023px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .desktop-menu {
+                display: none;
+            }
+            
+            .login-button {
+                display: none;
+            }
+            
+            .cart-icon {
+                margin-right: 0;
+            }
+            
+            .mx-14 {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+            
+            .feature-box-container {
+                flex-wrap: wrap;
+                gap: 20px;
+                justify-content: center;
+            }
+            
+            .feature-box {
+                width: 80px;
+            }
+            
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+            }
+        }
+        
+        @media (max-width: 639px) {
+            .mx-14 {
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+            
+            .rounded-40px {
+                border-radius: 24px;
+            }
+            
+            .feature-box-container {
+                gap: 15px;
+            }
+            
+            .feature-box {
+                width: 70px;
+            }
+            
+            .feature-icon {
+                width: 50px;
+                height: 50px;
+            }
+        }
+        
+        .mobile-close-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-close-btn:hover {
+            background-color: #f5f5f5;
+            transform: scale(1.05);
+        }
+        
+        .mobile-close-btn svg {
+            stroke: #000;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-close-btn:hover svg {
+            stroke: #333;
+        }
+    </style>
+</head>
+<body class="my-5 bg-[#f8f8f8]">
+<!-- Main Container -->
+<div class="min-h-screen flex flex-col">
+    <main class="mx-14 flex-grow">
+        <div class="max-w-7xl mx-auto px-4 py-16 md:py-0">
+            <!-- Two-column layout container -->
+            <div class="flex flex-col lg:flex-row justify-center items-center justify-between mb-12 gap-8">
+                <!-- Left column with content -->
+                <div class="w-full lg:w-1/2 flex flex-col items-start">
+                    <!-- Logo -->
+                    <div class="mb-28">
+                        <a href="https://completeboxevents.com">
+                            <img src="/media/logo.png" alt="Logo" class="h-12 w-auto">
+                        </a>
+                    </div>
+                    
+                    <!-- New Tag -->
+                    <div class="mb-8">
+                        <span class="bg-white px-5 py-2 rounded-full inline-block">
+                            <span class="font-[800] mr-1 neon-green-badge">New</span> Complete Box Event App is Here
+                        </span>
+                    </div>
+
+                    <!-- Hero Content -->
+                    <div class="mb-8 text-left">
+                        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
+                            From airport <br>to aisle, stress-free.
+                        </h1>
+                        <p class="text-gray-600 max-w-xl">
+                            Arrivals, rooms, luggage, check-ins, gifts all tracked live. <br>Zero chaos, zero stress.
+                        </p>
+                    </div>
+                    
+                    <!-- CTA Button -->
+                    <div class="mb-12">
+                        <a href="https://completeboxevents.com" class="try-free-btn">
+                            Plan My Event Now
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right column with banner image -->
+                <div class="w-full lg:w-1/2 flex justify-center lg:justify-end mt-[75px]">
+                    <img src="/media/banner_2.png" alt="completeboxevents" class="rounded-lg w-full max-w-[1000px] h-auto object-contain">
+                </div>
+            </div>
+
+            <!-- API Integration Section -->
+            <div class="py-20 rounded-3xl px-8 max-w-full mx-1">
+                <div class="text-center mb-16">
+                    
+                    <h2 class="text-4xl md:text-5xl font-[700] mb-4">
+                        Built for Hospitality.  <br>Designed for Control.
+                    </h2>
+                    
+                    <p class="text-gray-600 max-w-2xl mx-auto text-lg font-light">
+                        From guest arrivals to logistics, our platform brings every aspect of your event into one seamless, intelligent workspace
+                    </p>
+                </div>
+                
+                <!-- Feature Box -->
+                <div class="mb-10">
+                    <!-- Feature cards in a row -->
+                    <div class="flex justify-center items-center space-x-12">
+                        <!-- Group Chat -->
+                        <div class="feature-box">
+                            <div class="feature-icon bg-blue-50">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="text-blue-500" viewBox="0 0 16 16">
+                                  <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5"/>
+                                  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                </svg>
+                            </div>
+                            <span>Guest Management</span>
+                        </div>
+                        
+                        <!-- Instant Mail -->
+                        <div class="feature-box">
+                            <div class="feature-icon bg-green-50">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#4CD97B" class="bi bi-airplane-fill" viewBox="0 0 16 16">
+                                  <path d="M6.428 1.151C6.708.591 7.213 0 8 0s1.292.592 1.572 1.151C9.861 1.73 10 2.431 10 3v3.691l5.17 2.585a1.5 1.5 0 0 1 .83 1.342V12a.5.5 0 0 1-.582.493l-5.507-.918-.375 2.253 1.318 1.318A.5.5 0 0 1 10.5 16h-5a.5.5 0 0 1-.354-.854l1.319-1.318-.376-2.253-5.507.918A.5.5 0 0 1 0 12v-1.382a1.5 1.5 0 0 1 .83-1.342L6 6.691V3c0-.568.14-1.271.428-1.849"/>
+                                </svg>
+                            </div>
+                            <span>Logistics & Travels</span>
+                        </div>
+                        
+                        <!-- File Boat -->
+                        <div class="feature-box">
+                            <div class="feature-icon bg-purple-50">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-suitcase-lg-fill text-purple-500" viewBox="0 0 16 16">
+                                  <path d="M7 0a2 2 0 0 0-2 2H1.5A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14H2a.5.5 0 0 0 1 0h10a.5.5 0 0 0 1 0h.5a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2H11a2 2 0 0 0-2-2zM6 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1zM3 13V3h1v10zm9 0V3h1v10z"/>
+                                </svg>
+                                <div class="icon-badge">+</div>
+                            </div>
+                            <span>Luggage Trackings</span>
+                        </div>
+                        
+                        <!-- Call Manage -->
+                        <div class="feature-box">
+                            <div class="feature-icon bg-orange-50">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#F9A65C" class="bi bi-building-fill-check" viewBox="0 0 16 16">
+                                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514"/>
+                                  <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7.256A4.5 4.5 0 0 0 12.5 8a4.5 4.5 0 0 0-3.59 1.787A.5.5 0 0 0 9 9.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .39-.187A4.5 4.5 0 0 0 8.027 12H6.5a.5.5 0 0 0-.5.5V16H3a1 1 0 0 1-1-1zm2 1.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm3 0v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+                                </svg>
+                            </div>
+                            <span>Check-ins & Check-outs</span>
+                        </div>
+                        
+                        <!-- Growth Tracking -->
+                        <div class="feature-box">
+                            <div class="feature-icon bg-pink-50">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#F95CA0" class="bi bi-gift-fill" viewBox="0 0 16 16">
+                                  <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A3 3 0 0 1 3 2.506zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43zM9 3h2.932l.023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0zm6 4v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9z"/>
+                                </svg>
+                            </div>
+                            <span>Gifts Placements</span>
+                        </div>
+
+                        <!-- Data & Marketing -->
+                        <div class="feature-box">
+                            <div class="feature-icon bg-red-50">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#F95C5C" class="bi bi-headset" viewBox="0 0 16 16">
+                                  <path d="M8 1a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a6 6 0 1 1 12 0v6a2.5 2.5 0 0 1-2.5 2.5H9.366a1 1 0 0 1-.866.5h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 .866.5H11.5A1.5 1.5 0 0 0 13 12h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1V6a5 5 0 0 0-5-5"/>
+                                </svg>
+                            </div>
+                            <span>Hospitality and Support</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CTA Button -->
+                <div class="text-center mb-8">
+                    <a href="https://completeboxevents.com" class="get-started-btn inline-flex items-center">
+                        Get Started
+                    </a>
+                </div>
+                
+                <!-- Benefits -->
+                <div class="flex justify-center flex-wrap">
+                    <div class="benefit-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Live Guest Tracking</span>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Track Hospitality Services</span>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>24/7 Support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Virtual Medical Care Section -->
+        <div class="py-12 px-8">
+            <div class="max-w-6xl mx-auto">
+                <!-- Header -->
+                <div class="text-center mb-10">
+                    <h2 class="text-4xl font-bold mb-2">Sorted. Simplified. Supercharged.
+                    </h2>
+                    <p class="text-gray-600">All your event data. All your guest journeys. All in one platform.”</p>
+                </div>
+
+                <!-- Main Layout -->
+                <div class="grid grid-cols-12 gap-5">
+                    <!-- Left Column -->
+                    <div class="col-span-3 flex flex-col gap-5">
+                        <!-- Integrations Card -->
+                        <div class="bg-white rounded-3xl p-6 flex-1">
+                            <div class="flex space-x-2 mb-4">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <svg viewBox="0 0 24 24" class="h-4 w-4 text-blue-600" fill="currentColor">
+                                        <rect width="10" height="10" x="2" y="2" rx="1.5"/>
+                                        <rect width="10" height="10" x="2" y="12" rx="1.5"/>
+                                        <rect width="10" height="10" x="12" y="2" rx="1.5"/>
+                                        <rect width="10" height="10" x="12" y="12" rx="1.5"/>
+                                    </svg>
+                                </div>
+                                <div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                                    <svg viewBox="0 0 24 24" class="h-4 w-4 text-orange-500" fill="currentColor">
+                                        <circle cx="12" cy="12" r="9"/>
+                                        <path d="M12 7v10M7 12h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                    <svg viewBox="0 0 24 24" class="h-4 w-4 text-green-500" fill="currentColor">
+                                        <path d="M22 2L11 13l-4-4-6 6 4 4 6-6 11-11z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Effortless Planning</h3>
+                            <p class="text-sm text-gray-700">Keep everything under control guest lists, room assignments, transport, and more in just a few taps.</p>
+                        </div>
+
+                        <!-- Innovation Tags -->
+                        <div class="bg-white rounded-3xl p-6 flex-1">
+                            <div class="flex flex-wrap gap-2">
+                                
+                                <div class="inline-flex items-center px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-medium">
+                                    No-Code
+                                </div>
+                                
+                                <div class="inline-flex items-center px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-medium">
+                                    Real-Time Sync
+                                </div>
+                                
+                                <div class="inline-flex items-center px-3 py-1 rounded-full bg-lime-100 text-lime-800 text-xs font-medium">
+                                    Cross-App Actions
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Middle Column -->
+                    <div class="col-span-4">
+                        <!-- DocHands Card -->
+                        <div class="bg-[#fab6ae] rounded-3xl h-full overflow-hidden relative">
+                            <div class="p-6">
+                                <h3 class="text-3xl font-bold text-white">CompleteBoxEvents</h3>
+                            </div>
+                            <img src="/media/cbe_banner.jpg" 
+                                 alt="CompleteBoxEvents" class="absolute bottom-0 w-full" style="height: calc(100% - 85px); object-fit: cover; object-position: center top;">
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="col-span-5">
+                        <div class="grid grid-cols-5 gap-5">
+                            <!-- 95% Card -->
+                            <div class="col-span-3 bg-green-50 rounded-3xl p-6">
+                                <div class="flex flex-col items-center">
+                                    <div class="bg-pink-200 rounded-full w-10 h-10 flex items-center justify-center mb-3">
+                                        <svg class="h-6 w-6 text-pink-600" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <h2 class="text-7xl font-bold mb-1">97%</h2>
+                                    <p class="text-xs text-center text-gray-700">of users say they finally feel ‘in control’ of guest management with Complete Box Event.</p>
+                                </div>
+                            </div>
+
+                            <!-- Dental Card -->
+                            <div class="col-span-2 bg-white rounded-3xl overflow-hidden relative">
+                                <img src="/media/ex_banner.jpg" 
+                                     alt="1Mat" class="w-full h-full object-contain object-center scale-[2] transform hover:scale-[1.65] transition-transform duration-300">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4">
+                                    <h3 class="text-white text-sm font-medium">Instant notifications for arrivals, check-ins, and changes, so you’re always in the loop.</h3>
+                                </div>
+                            </div>
+
+                            <!-- Weekly Journey -->
+                            <div class="col-span-5 bg-blue-50 rounded-3xl p-6">
+                                <h3 class="text-xl font-semibold mb-1">Weekly Snapshots</h3>
+                                <p class="text-sm text-gray-700 mb-4">Track guest journeys and event progress within 2-3 weeks.</p>
+                                <div class="relative h-20">
+                                    <!-- Avatar circles -->
+                                    <div class="absolute w-10 h-10 rounded-full bg-cover bg-center border-2 border-white" 
+                                         style="background-image: url('https://randomuser.me/api/portraits/women/65.jpg'); top: 0; left: 10%"></div>
+                                    <div class="absolute w-10 h-10 rounded-full bg-cover bg-center border-2 border-white" 
+                                         style="background-image: url('https://randomuser.me/api/portraits/men/32.jpg'); top: 40%; left: 30%"></div>
+                                    <div class="absolute w-10 h-10 rounded-full bg-cover bg-center border-2 border-white" 
+                                         style="background-image: url('https://randomuser.me/api/portraits/women/44.jpg'); bottom: 0; left: 50%"></div>
+                                    <div class="absolute w-10 h-10 rounded-full bg-cover bg-center border-2 border-white" 
+                                         style="background-image: url('https://randomuser.me/api/portraits/women/47.jpg'); top: 10%; right: 25%"></div>
+                                    <div class="absolute w-10 h-10 rounded-full bg-cover bg-center border-2 border-white" 
+                                         style="background-image: url('https://randomuser.me/api/portraits/men/45.jpg'); top: 40%; right: 10%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Testimonials Section -->
+        <div class="py-6 px-8">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-10">
+                    <span class="bg-white px-5 py-2 rounded-full text-sm">Testimonials</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mt-4">Loved by hosts and guests</h2>
+                    <p class="text-gray-600 text-sm md:text-base max-w-2xl mx-auto">Real stories from people who ran stress-free events with Complete Box Event.</p>
+                </div>
+
+                <!-- Carousel (Testimonials) -->
+                <div class="relative">
+                    <div id="t-carousel-viewport" class="overflow-hidden">
+                        <div id="t-carousel-track" class="flex gap-6 will-change-transform transition-transform duration-500 ease-out"></div>
+                    </div>
+                    <div class="flex justify-center gap-3 mt-6">
+                        <button id="t-prev" aria-label="Previous" class="px-4 py-2 text-sm rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <button id="t-next" aria-label="Next" class="px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <style>
+                    /* Fixed height carousel with responsive text */
+                    #t-carousel-viewport {
+                        height: 300px; 
+                    }
+                     /* Make the track fill the viewport height so children can match */
+                     #t-carousel-track {
+                         height: 100%;
+                         font-size: 10px;
+                         align-items: stretch; /* ensure equal height across cards */
+                     }
+                    
+                    #t-carousel-track > div {
+                        height: 100%;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    @media screen and (max-width: 1185px) {
+                        #t-carousel-track {
+                            height: 80%;
+                            font-size: 0.125rem;
+                            align-items: stretch; /* ensure equal height across cards */
+                        }
+                    }
+                    @media screen and (max-width: 1000px) {
+                        #t-carousel-track {
+                            height: 90%;
+                            font-size: 0.125rem;
+                            align-items: stretch; /* ensure equal height across cards */
+                        }
+                    }
+                    @media screen and (max-width: 864px) {
+                        #t-carousel-track {
+                            height: 100%;
+                            font-size: 0.125rem;
+                            align-items: stretch; /* ensure equal height across cards */
+                        }
+                    }
+                    @media screen and (max-width: 938px) {
+                        #t-carousel-track {
+                            height: 100%;
+                            font-size: 8px;
+                            align-items: stretch; /* ensure equal height across cards */
+                        }
+                    }
+                    
+                    /* Ensure content fits within container */
+                    #t-carousel-track .text-gray-700 {
+                        overflow: hidden;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 8;
+                        -webkit-box-orient: vertical;
+                        flex-grow: 1;
+                    }
+                </style>
+
+                <script>
+                (function(){
+                  const DATA = [
+                    {
+                      name: 'Priya & Arjun',
+                      role: 'Delhi, India',
+                      quote: 'Planning a 3-day wedding with 400 guests felt overwhelming until we used Complete Box Event. From airport pickups to room assignments, everything was seamless. We finally got to enjoy our wedding instead of running around managing chaos!'
+                    },
+                    {
+                      name: 'Ramesh Agarwal',
+                      role: 'Wedding Planner, Jaipur, India',
+                      quote: 'As a wedding planner, coordination is usually the toughest part. This app made my job 10× easier! Live updates on guest arrivals and smooth check-ins meant zero last-minute confusion. My clients were beyond happy.'
+                    },
+                    {
+                      name: 'Neha Sharma',
+                      role: 'Bride’s Sister, Mumbai',
+                      quote: 'I’ve seen weddings turn into stress marathons. With Complete Box Event, we knew exactly where every guest was and what they needed. It made our hospitality feel truly personal and thoughtful.'
+                    },
+                    {
+                      name: 'The Mehra Family',
+                      role: 'Punjab',
+                      quote: 'We hosted guests from five different countries. Tracking flights, transport, and rooms could’ve been a nightmare, but this app kept everything under control. Our guests kept saying how smooth their experience was!'
+                    },
+                    {
+                      name: 'Ankit Verma',
+                      role: 'Wedding Planner, Goa',
+                      quote: 'This isn’t just a tool it’s a game-changer for wedding planners like me. No more endless phone calls or spreadsheets. My team could focus on creating magical moments while the app handled the logistics.'
+                    }
+                  ];
+
+                  const track = document.getElementById('t-carousel-track');
+                  const prevBtn = document.getElementById('t-prev');
+                  const nextBtn = document.getElementById('t-next');
+                  if (!track) return;
+
+                  function escapeHtml(s){
+                    return String(s).replace(/[&<>\"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));
+                  }
+
+                  function createCard(t){
+                    const div = document.createElement('div');
+                    div.className = 'bg-white rounded-2xl text-sm p-6 shadow-[0_0_5px_rgb(0,0,0,0.1)] border border-gray-100 h-full flex flex-col flex-shrink-0';
+                    div.innerHTML = `
+                      <p class="text-gray-700 leading-relaxed text-[15px]">“${escapeHtml(t.quote)}”</p>
+                      <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-sm font-semibold">${escapeHtml(t.name)}</p>
+                        <p class="text-xs text-gray-500">${escapeHtml(t.role)}</p>
+                      </div>
+                    `;
+                    return div;
+                  }
+
+                  let perView = 3; // Show 3 at a time on desktop
+                  let index = 0;
+                  let cardWidth = 0;
+                  let gapPx = 0;
+
+                  function render(){
+                    track.innerHTML = '';
+                    DATA.forEach(t => track.appendChild(createCard(t)));
+                    layout();
+                    updateButtons();
+                    applyTransform();
+                  }
+
+                  function layout(){
+                    perView = window.matchMedia('(min-width: 768px)').matches ? 3 : 1;
+                    const cards = Array.from(track.children);
+                    cards.forEach(el => { el.style.width = (100 / perView) + '%'; });
+                    const style = getComputedStyle(track);
+                    gapPx = parseFloat(style.gap || '0') || 0;
+                    const first = cards[0];
+                    cardWidth = first ? first.getBoundingClientRect().width : 0;
+                    clampIndex();
+                  }
+
+                  function clampIndex(){
+                    const max = Math.max(0, DATA.length - perView);
+                    if (index < 0) index = 0;
+                    if (index > max) index = max;
+                    updateButtons();
+                  }
+
+                  function step(delta){
+                    index += delta;
+                    clampIndex();
+                    applyTransform();
+                  }
+
+                  function applyTransform(){
+                    const offset = index * (cardWidth + gapPx);
+                    track.style.transform = 'translateX(' + (-offset) + 'px)';
+                  }
+
+                  function updateButtons(){
+                    const max = Math.max(0, DATA.length - perView);
+                    if (prevBtn) prevBtn.disabled = index === 0;
+                    if (nextBtn) nextBtn.disabled = index === max;
+                  }
+
+                  window.addEventListener('resize', () => { layout(); applyTransform(); });
+                  prevBtn && prevBtn.addEventListener('click', () => step(-1));
+                  nextBtn && nextBtn.addEventListener('click', () => step(1));
+
+                  render();
+                })();
+                </script>
+
+                <!-- Grid (desktop/tablet) -->
+                <div class="hidden">
+                    <!-- Card 1 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-full flex flex-col">
+                        <div class="flex items-center mb-4">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Aisha" class="h-10 w-10 rounded-full object-cover mr-3">
+                            <div>
+                                <p class="text-sm font-semibold">Aisha K.</p>
+                                <p class="text-xs text-gray-500">Bride Coordinator</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-yellow-500 mb-3">
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current text-gray-300"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <span class="ml-2 text-xs text-gray-500">4.8</span>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed">“Guest check-ins were a breeze. I could see arrivals in real-time and focus on moments that mattered.”</p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-full flex flex-col">
+                        <div class="flex items-center mb-4">
+                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Rohan" class="h-10 w-10 rounded-full object-cover mr-3">
+                            <div>
+                                <p class="text-sm font-semibold">Rohan M.</p>
+                                <p class="text-xs text-gray-500">Hotel Front Desk</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-yellow-500 mb-3">
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current text-gray-300"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <span class="ml-2 text-xs text-gray-500">4.9</span>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed">“Room assignments and last-minute changes synced instantly. Our guests never waited.”</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-full flex flex-col">
+                        <div class="flex items-center mb-4">
+                            <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="Priya" class="h-10 w-10 rounded-full object-cover mr-3">
+                            <div>
+                                <p class="text-sm font-semibold">Priya S.</p>
+                                <p class="text-xs text-gray-500">Wedding Planner</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-yellow-500 mb-3">
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 fill-current text-gray-300"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                            <span class="ml-2 text-xs text-gray-500">4.8</span>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed">“Vendors, teams, and families stayed aligned. The timeline actually ran ahead of schedule.”</p>
+                    </div>
+                </div>
+
+                <!-- Horizontal scroll (mobile) -->
+                <div class="hidden" style="scrollbar-width:none; -ms-overflow-style:none;">
+                    <div class="flex gap-4 snap-x snap-mandatory">
+                        <div class="min-w-[85%] snap-center bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                            <div class="flex items-center mb-3">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Aisha" class="h-9 w-9 rounded-full object-cover mr-3">
+                                <div>
+                                    <p class="text-sm font-semibold">Aisha K.</p>
+                                    <p class="text-[11px] text-gray-500">Bride Coordinator</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center text-yellow-500 mb-2">
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current text-gray-300"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <span class="ml-2 text-[11px] text-gray-500">4.8</span>
+                            </div>
+                            <p class="text-gray-700 text-sm leading-relaxed">“Guest check-ins were a breeze. I could see arrivals in real-time and focus on moments that mattered.”</p>
+                        </div>
+
+                        <div class="min-w-[85%] snap-center bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                            <div class="flex items-center mb-3">
+                                <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Rohan" class="h-9 w-9 rounded-full object-cover mr-3">
+                                <div>
+                                    <p class="text-sm font-semibold">Rohan M.</p>
+                                    <p class="text-[11px] text-gray-500">Hotel Front Desk</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center text-yellow-500 mb-2">
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current text-gray-300"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <span class="ml-2 text-[11px] text-gray-500">4.9</span>
+                            </div>
+                            <p class="text-gray-700 text-sm leading-relaxed">“Room assignments and last-minute changes synced instantly. Our guests never waited.”</p>
+                        </div>
+
+                        <div class="min-w-[85%] snap-center bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                            <div class="flex items-center mb-3">
+                                <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="Priya" class="h-9 w-9 rounded-full object-cover mr-3">
+                                <div>
+                                    <p class="text-sm font-semibold">Priya S.</p>
+                                    <p class="text-[11px] text-gray-500">Wedding Planner</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center text-yellow-500 mb-2">
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current text-gray-300"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+                                <span class="ml-2 text-[11px] text-gray-500">4.8</span>
+                            </div>
+                            <p class="text-gray-700 text-sm leading-relaxed">“Vendors, teams, and families stayed aligned. The timeline actually ran ahead of schedule.”</p>
+                        </div>
+                    </div>
+                    <style>
+                        .overflow-x-auto::-webkit-scrollbar { display: none; }
+                    </style>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Integrations Section -->
+        <div class="rounded-b-[40px] py-16 px-8">
+            <div class="max-w-6xl mx-auto">
+                <!-- Badge -->
+                <div class="flex mb-12">
+                    <span class="bg-white px-5 py-2 rounded-full text-sm">
+                        CompleteBoxEvents, Integrations
+                    </span>
+                </div>
+                
+                <!-- Two column layout -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Left column - Heading -->
+                    <div>
+                        <h2 class="text-[2.40rem] font-[500] leading-tight mb-0">
+                            Built to Make Weddings Truly Memorable
+                        </h2>
+                    </div>
+                    
+                    <!-- Right column - Description -->
+                    <div>
+                        <p class="text-gray-600">
+                            Why juggle spreadsheets and phone calls when one app can do it all?
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Integration logos with descriptions -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-16 mt-20">
+                    <!-- PayPal -->
+                    <div class="flex flex-col items-start">
+                        <div class="w-24 h-24 rounded-full flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#3B82F6" class="bi bi-smartwatch" viewBox="0 0 16 16">
+                              <path d="M9 5a.5.5 0 0 0-1 0v3H6a.5.5 0 0 0 0 1h2.5a.5.5 0 0 0 .5-.5z"/>
+                              <path d="M4 1.667v.383A2.5 2.5 0 0 0 2 4.5v7a2.5 2.5 0 0 0 2 2.45v.383C4 15.253 4.746 16 5.667 16h4.666c.92 0 1.667-.746 1.667-1.667v-.383a2.5 2.5 0 0 0 2-2.45V8h.5a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5H14v-.5a2.5 2.5 0 0 0-2-2.45v-.383C12 .747 11.254 0 10.333 0H5.667C4.747 0 4 .746 4 1.667M4.5 3h7A1.5 1.5 0 0 1 13 4.5v7a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 3 11.5v-7A1.5 1.5 0 0 1 4.5 3"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Smart Event Planning
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Plan arrivals, assign rooms, and manage schedules with ease.
+                        </p>
+                    </div>
+                    
+                    <!-- Stripe -->
+                    <div class="flex flex-col items-start">
+                        <div class="w-24 h-24 rounded-full flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#10B981" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Built for Hosts & Planners
+                        </h3>
+                        <p class="text-gray-600 mb-4"> 
+                            A single place to coordinate with teams, vendors, and families.
+                        </p>
+                    </div>
+                    
+                    <!-- QuickBooks -->
+                    <div class="flex flex-col items-start">
+                        <div class="w-24 h-24 rounded-full flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#F59E0B" class="bi bi-cup-hot" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M.5 6a.5.5 0 0 0-.488.608l1.652 7.434A2.5 2.5 0 0 0 4.104 16h5.792a2.5 2.5 0 0 0 2.44-1.958l.131-.59a3 3 0 0 0 1.3-5.854l.221-.99A.5.5 0 0 0 13.5 6zM13 12.5a2 2 0 0 1-.316-.025l.867-3.898A2.001 2.001 0 0 1 13 12.5M2.64 13.825 1.123 7h11.754l-1.517 6.825A1.5 1.5 0 0 1 9.896 15H4.104a1.5 1.5 0 0 1-1.464-1.175"/>
+                              <path d="m4.4.8-.003.004-.014.019a4 4 0 0 0-.204.31 2 2 0 0 0-.141.267c-.026.06-.034.092-.037.103v.004a.6.6 0 0 0 .091.248c.075.133.178.272.308.445l.01.012c.118.158.26.347.37.543.112.2.22.455.22.745 0 .188-.065.368-.119.494a3 3 0 0 1-.202.388 5 5 0 0 1-.253.382l-.018.025-.005.008-.002.002A.5.5 0 0 1 3.6 4.2l.003-.004.014-.019a4 4 0 0 0 .204-.31 2 2 0 0 0 .141-.267c.026-.06.034-.092.037-.103a.6.6 0 0 0-.09-.252A4 4 0 0 0 3.6 2.8l-.01-.012a5 5 0 0 1-.37-.543A1.53 1.53 0 0 1 3 1.5c0-.188.065-.368.119-.494.059-.138.134-.274.202-.388a6 6 0 0 1 .253-.382l.025-.035A.5.5 0 0 1 4.4.8m3 0-.003.004-.014.019a4 4 0 0 0-.204.31 2 2 0 0 0-.141.267c-.026.06-.034.092-.037.103v.004a.6.6 0 0 0 .091.248c.075.133.178.272.308.445l.01.012c.118.158.26.347.37.543.112.2.22.455.22.745 0 .188-.065.368-.119.494a3 3 0 0 1-.202.388 5 5 0 0 1-.253.382l-.018.025-.005.008-.002.002A.5.5 0 0 1 6.6 4.2l.003-.004.014-.019a4 4 0 0 0 .204-.31 2 2 0 0 0 .141-.267c.026-.06.034-.092.037-.103a.6.6 0 0 0-.09-.252A4 4 0 0 0 6.6 2.8l-.01-.012a5 5 0 0 1-.37-.543A1.53 1.53 0 0 1 6 1.5c0-.188.065-.368.119-.494.059-.138.134-.274.202-.388a6 6 0 0 1 .253-.382l.025-.035A.5.5 0 0 1 7.4.8m3 0-.003.004-.014.019a4 4 0 0 0-.204.31 2 2 0 0 0-.141.267c-.026.06-.034.092-.037.103v.004a.6.6 0 0 0 .091.248c.075.133.178.272.308.445l.01.012c.118.158.26.347.37.543.112.2.22.455.22.745 0 .188-.065.368-.119.494a3 3 0 0 1-.202.388 5 5 0 0 1-.252.382l-.019.025-.005.008-.002.002A.5.5 0 0 1 9.6 4.2l.003-.004.014-.019a4 4 0 0 0 .204-.31 2 2 0 0 0 .141-.267c.026-.06.034-.092.037-.103a.6.6 0 0 0-.09-.252A4 4 0 0 0 9.6 2.8l-.01-.012a5 5 0 0 1-.37-.543A1.53 1.53 0 0 1 9 1.5c0-.188.065-.368.119-.494.059-.138.134-.274.202-.388a6 6 0 0 1 .253-.382l.025-.035A.5.5 0 0 1 10.4.8"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Seamless Experience
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Make guests feel valued with smooth check-ins and thoughtful planning.
+                        </p>
+                    </div>
+                    
+                    <!-- Wise -->
+                    <div class="flex flex-col items-start">
+                        <div class="w-24 h-24 rounded-full flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#8B5CF6" class="bi bi-shield-check" viewBox="0 0 16 16">
+                              <path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/>
+                              <path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Privacy & Trust</h3>
+                        <p class="text-gray-600 mb-4">
+                            Your guest details stay safe and private — always.
+                        </p>
+                    </div>
+                </div>
+        </div>
+    </main>
+</div>
+
+<!-- Add script to ensure the professional modal functionality is loaded -->
+<script type="text/plain" data-disabled="moved-to-static">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ensure the registerProfessionalsLink works correctly
+        const professionalLink = document.getElementById('registeredProfessionalsLink');
+        if (professionalLink && !professionalLink.hasAttribute('onclick')) {
+            professionalLink.setAttribute('onclick', 'openProfessionalModal()');
+        }
+    });
+</script>
+
+<!-- User Details Modal -->
+<div id="user-details-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hidden transition-opacity duration-300">
+  <div id="modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 transform scale-95 opacity-0 transition-all duration-300">
+    <div class="flex justify-between items-start">
+      <h2 class="text-2xl font-bold text-gray-900">Almost there!</h2>
+      <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <p class="mt-2 text-sm text-gray-600">Provide your details to continue.</p>
+    
+    <div id="modal-error-message" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 text-sm rounded-lg hidden">
+      <strong>Error:</strong> <span id="modal-error-text"></span>
+    </div>
+
+    <form id="user-details-form" class="mt-6 space-y-4">
+      {% csrf_token %}
+      <input type="hidden" name="plan" id="selected-plan-id">
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+        <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+      </div>
+      
+      <div>
+        <label for="phone" class="block text-sm font-medium text-gray-700">Mobile Number</label>
+        <input type="tel" id="phone" name="phone" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+      </div>
+      
+      <div id="discount-code-container" class="hidden">
+        <label for="discount_code" class="block text-sm font-medium text-gray-700">Discount Code</label>
+        <div class="flex">
+          <input type="text" id="discount_code" name="discount_code" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          <button type="button" id="apply-discount-btn" class="ml-2 mt-1 inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+            Apply
+          </button>
+        </div>
+        <div id="discount-info" class="mt-2 text-sm text-green-600 hidden"></div>
+      </div>
+      
+      <div class="flex items-center cursor-pointer" id="show-discount-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+        </svg>
+        <span class="ml-1 text-sm text-gray-600">Have a discount code?</span>
+      </div>
+      
+      <div class="pt-4 flex items-center justify-end space-x-3">
+        <button type="button" id="cancel-btn" class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+          Cancel
+        </button>
+        <button type="submit" id="proceed-btn" class="px-5 py-2.5 text-sm font-medium text-white bg-gray-800 hover:bg-black rounded-lg transition-colors flex items-center">
+          <span>Continue</span>
+          <svg id="loader" class="animate-spin -mr-1 ml-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- User Agreement Modal -->
+<div id="user-agreement-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hidden transition-opacity duration-300">
+  <div id="agreement-modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-3xl p-8 transform scale-95 opacity-0 transition-all duration-300 max-h-[90vh] flex flex-col">
+    <div class="flex justify-between items-start">
+      <h2 class="text-2xl font-bold text-gray-900">User Agreement</h2>
+      <button id="close-agreement-modal-btn" class="text-gray-400 hover:text-gray-600">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <p class="mt-2 text-sm text-gray-600">Please review and accept the user agreement to continue.</p>
+    
+    <div id="agreement-error-message" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 text-sm rounded-lg hidden">
+      <strong>Error:</strong> <span id="agreement-error-text"></span>
+    </div>
+
+    <div id="agreement-content" class="mt-4 overflow-y-auto flex-grow border border-gray-200 rounded-lg p-4 text-sm text-gray-700">
+      <div class="flex justify-center items-center h-full">
+        <svg class="animate-spin h-8 w-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </div>
+    </div>
+    
+    <div class="pt-4 flex items-center justify-end space-x-3 mt-4">
+      <button type="button" id="cancel-agreement-btn" class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+        Cancel
+      </button>
+      <button type="button" id="accept-agreement-btn" class="px-5 py-2.5 text-sm font-medium text-white bg-gray-800 hover:bg-black rounded-lg transition-colors flex items-center">
+        <span>I Accept</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Breakdown Modal -->
+<div id="payment-breakdown-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hidden transition-opacity duration-300">
+  <div id="payment-breakdown-content" class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 transform scale-95 opacity-0 transition-all duration-300">
+    <div class="flex justify-between items-start">
+      <h2 class="text-2xl font-bold text-gray-900">Payment Summary</h2>
+      <button id="close-payment-breakdown-btn" class="text-gray-400 hover:text-gray-600">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <p class="mt-2 text-sm text-gray-600">Please review your payment details.</p>
+    
+    <div class="mt-6 space-y-4">
+      <div class="flex justify-between items-center py-2 border-b border-gray-100">
+        <span class="text-gray-700">Base Price</span>
+        <span id="base-price" class="font-medium">₹0.00</span>
+      </div>
+      
+      <div class="flex justify-between items-center py-2 border-b border-gray-100">
+        <span class="text-gray-700">GST (18%)</span>
+        <span id="gst-amount" class="font-medium">₹0.00</span>
+      </div>
+      
+      <div class="flex justify-between items-center py-3">
+        <span class="text-gray-800 font-bold">Total Amount</span>
+        <span id="total-amount" class="font-bold text-lg">₹0.00</span>
+      </div>
+      
+      <div id="discount-applied" class="bg-green-50 rounded-lg p-3 text-sm text-green-700 hidden">
+        <svg class="inline-block h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+        <span id="discount-message">Discount Applied</span>
+      </div>
+    </div>
+    
+    <div class="pt-6 flex items-center justify-end space-x-3">
+      <button type="button" id="back-to-agreement-btn" class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+        Back
+      </button>
+      <button type="button" id="proceed-to-payment-btn" class="px-5 py-2.5 text-sm font-medium text-white bg-gray-800 hover:bg-black rounded-lg transition-colors">
+        Proceed
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- OTP Verification Modal -->
+<div id="otp-verification-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hidden transition-opacity duration-300">
+  <div id="otp-modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 transform scale-95 opacity-0 transition-all duration-300">
+    <div class="flex justify-between items-start">
+      <h2 class="text-2xl font-bold text-gray-900">Verify OTP</h2>
+      <button id="close-otp-modal-btn" class="text-gray-400 hover:text-gray-600">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <p class="mt-2 text-sm text-gray-600">Enter the 6-digit OTP sent to your email address.</p>
+    
+    <div id="otp-error-message" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 text-sm rounded-lg hidden">
+      <strong>Error:</strong> <span id="otp-error-text"></span>
+    </div>
+    
+    <div id="otp-success-message" class="mt-4 p-3 bg-green-100 border border-green-400 text-green-700 text-sm rounded-lg hidden">
+      <strong>Success:</strong> <span id="otp-success-text">OTP sent to your email.</span>
+    </div>
+
+    <form id="otp-verification-form" class="mt-6 space-y-4">
+      {% csrf_token %}
+      <div class="flex justify-between gap-2">
+        <input type="text" maxlength="1" class="otp-input text-center w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-lg font-bold">
+        <input type="text" maxlength="1" class="otp-input text-center w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-lg font-bold">
+        <input type="text" maxlength="1" class="otp-input text-center w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-lg font-bold">
+        <input type="text" maxlength="1" class="otp-input text-center w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-lg font-bold">
+        <input type="text" maxlength="1" class="otp-input text-center w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-lg font-bold">
+        <input type="text" maxlength="1" class="otp-input text-center w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-lg font-bold">
+      </div>
+      <input type="hidden" id="combined-otp" name="otp">
+      
+      <div class="text-center text-sm text-gray-600 mt-2">
+        <p>Didn't receive OTP? <button type="button" id="resend-otp-btn" class="text-gray-800 font-medium hover:underline">Resend OTP</button></p>
+      </div>
+      
+      <div class="pt-4 flex items-center justify-end space-x-3">
+        <button type="button" id="cancel-otp-btn" class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+          Cancel
+        </button>
+        <button type="submit" id="verify-otp-btn" class="px-5 py-2.5 text-sm font-medium text-white bg-gray-800 hover:bg-black rounded-lg transition-colors flex items-center">
+          <span>Verify & Proceed</span>
+          <svg id="otp-loader" class="animate-spin -mr-1 ml-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Phone Capture Modal -->
+<div id="phone-capture-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60">
+  <div class="bg-white w-full max-w-md mx-4 rounded-2xl p-6 shadow-xl relative">
+    <h3 class="text-xl font-bold">Continue by entering your mobile number</h3>
+    <p class="text-sm text-gray-600 mt-1">We use this to personalize your experience. You’ll only do this once.</p>
+    <div id="phone-error" class="mt-3 hidden text-sm text-red-600">Please enter a valid mobile number.</div>
+    <form id="phone-capture-form" class="mt-5 space-y-3">
+      <label for="phone-input" class="block text-sm font-medium text-gray-700">Mobile number</label>
+      <div class="flex">
+        <input type="tel" id="phone-input" inputmode="tel" autocomplete="tel" placeholder="+91 98765 43210" class="flex-1 mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-l-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-black focus:border-black">
+        <button type="submit" id="phone-submit-btn" class="mt-1 px-4 py-2 bg-black text-white rounded-r-md hover:bg-gray-900 transition">Submit</button>
+      </div>
+      <p class="text-xs text-gray-500">By continuing, you agree to our terms.</p>
+    </form>
+    <!-- Close button -->
+    <button id="phone-modal-close" aria-label="Close" class="absolute -top-3 -right-3 p-2 rounded-full bg-white shadow hover:bg-gray-50">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+  </div>
+  <style>
+    /* Ensure modal uses flex centering when shown */
+    #phone-capture-modal:not(.hidden) { display: flex; }
+  </style>
+</div>
+
+<script>
+(function() {
+  const STORAGE_KEY = 'rsvp_phone';
+  const phoneCaptureModal = document.getElementById('phone-capture-modal');
+  const phoneForm = document.getElementById('phone-capture-form');
+  const phoneInput = document.getElementById('phone-input');
+  const phoneError = document.getElementById('phone-error');
+  const getStartedBtns = Array.from(document.querySelectorAll('.get-started-btn'));
+  const phoneCloseBtn = document.getElementById('phone-modal-close');
+  let modalShownThisSession = false;
+  let scrollLocked = false;
+  let iosLock = {savedTop: 0};
+  let isModalOpen = false;
+  let suppressUntilNextScroll = false;
+  let rearmScrollListenerAttached = false;
+  const SCROLL_THRESHOLD = 50;
+
+  const hasSavedPhone = () => {
+    const v = localStorage.getItem(STORAGE_KEY);
+    return isValidPhone(v);
+  };
+
+  function isValidPhone(value) {
+    if (!value) return false;
+    const digits = String(value).replace(/\D/g, '');
+    return digits.length >= 10 && digits.length <= 15;
+  }
+
+  function showModal() {
+    if (hasSavedPhone() || isModalOpen) return;
+    modalShownThisSession = true;
+    suppressUntilNextScroll = false;
+    phoneError.classList.add('hidden');
+    phoneCaptureModal.classList.remove('hidden');
+    isModalOpen = true;
+    lockScroll();
+    setTimeout(() => { try { phoneInput && phoneInput.focus(); } catch(e){} }, 50);
+  }
+
+  function hideModal(options = {}) {
+    const { force = false } = options;
+    if (!hasSavedPhone() && !force) {
+      return;
+    }
+    phoneCaptureModal.classList.add('hidden');
+    isModalOpen = false;
+    unlockScroll();
+  }
+
+  function armReshowOnScroll() {
+    if (rearmScrollListenerAttached) return;
+    rearmScrollListenerAttached = true;
+    const onScroll = () => {
+      if (hasSavedPhone()) {
+        window.removeEventListener('scroll', onScroll);
+        rearmScrollListenerAttached = false;
+        return;
+      }
+      if (window.scrollY > SCROLL_THRESHOLD) {
+        window.removeEventListener('scroll', onScroll);
+        rearmScrollListenerAttached = false;
+        showModal();
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  function closeAndScrollToTop() {
+    modalShownThisSession = false;
+    hideModal({ force: true });
+    requestAnimationFrame(() => {
+      try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      catch(e) { window.scrollTo(0, 0); }
+    });
+    armReshowOnScroll();
+  }
+
+  function preventScrollHandler(e) {
+    if (scrollLocked) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }
+
+  function keydownHandler(e) {
+    if (!scrollLocked) return;
+    const keys = ['ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' '];
+    if (keys.includes(e.key)) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }
+
+  function lockScroll() {
+    if (scrollLocked) return;
+    scrollLocked = true;
+    // Cross-platform lock (iOS included)
+    const isIOS = /iP(ad|hone|od)/.test(window.navigator.platform) ||
+                  (window.navigator.userAgent.includes('Mac') && 'ontouchend' in document);
+    if (isIOS) {
+      iosLock.savedTop = window.scrollY || document.documentElement.scrollTop || 0;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${iosLock.savedTop}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+    window.addEventListener('wheel', preventScrollHandler, { passive: false });
+    window.addEventListener('touchmove', preventScrollHandler, { passive: false });
+    window.addEventListener('keydown', keydownHandler, { passive: false });
+  }
+
+  function unlockScroll() {
+    if (!scrollLocked) return;
+    scrollLocked = false;
+    const isIOS = /iP(ad|hone|od)/.test(window.navigator.platform) ||
+                  (window.navigator.userAgent.includes('Mac') && 'ontouchend' in document);
+    if (isIOS) {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      window.scrollTo(0, iosLock.savedTop || 0);
+    } else {
+      document.body.style.overflow = '';
+    }
+    window.removeEventListener('wheel', preventScrollHandler);
+    window.removeEventListener('touchmove', preventScrollHandler);
+    window.removeEventListener('keydown', keydownHandler);
+  }
+
+  // Intercept Get Started click if needed
+  getStartedBtns.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      if (!hasSavedPhone()) {
+        e.preventDefault();
+        showModal();
+      }
+    });
+  });
+
+  // Observe when Get Started enters viewport
+  const target = getStartedBtns[0];
+  if (target && !hasSavedPhone()) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          showModal();
+        }
+      });
+    }, { threshold: 0.5 });
+    io.observe(target);
+  }
+
+  // Close on overlay click (outside the modal content)
+  phoneCaptureModal && phoneCaptureModal.addEventListener('click', (e) => {
+    if (e.target === phoneCaptureModal) {
+      closeAndScrollToTop();
+    }
+  });
+
+  // Close on close button
+  phoneCloseBtn && phoneCloseBtn.addEventListener('click', closeAndScrollToTop);
+
+  // Pre-fill from storage if exists
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved && phoneInput) {
+    phoneInput.value = saved;
+  }
+
+  phoneForm && phoneForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const raw = (phoneInput && phoneInput.value || '').trim();
+    if (!isValidPhone(raw)) {
+      phoneError.classList.remove('hidden');
+      return;
+    }
+    localStorage.setItem(STORAGE_KEY, raw);
+    // Fire-and-forget save to backend
+    try {
+      const formData = new FormData();
+      formData.append('phone', raw);
+      fetch('/api/save-phone/', { method: 'POST', body: formData, credentials: 'same-origin' });
+    } catch (err) { /* no-op */ }
+    phoneError.classList.add('hidden');
+    hideModal();
+  });
+})();
+</script>
+
+</body>
+</html>
