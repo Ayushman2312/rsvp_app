@@ -76,6 +76,18 @@ WSGI_APPLICATION = 'rsvp_app.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'rsvp_app',
+        'USER': 'rsvp_app',
+        'PASSWORD': 'Ayush@23122003',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+
+
+DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
