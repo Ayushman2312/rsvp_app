@@ -150,4 +150,4 @@ EMAIL_HOST_USER = 'neverreplyhim@gmail.com'
 EMAIL_HOST_PASSWORD = 'mkie qfxw wfaa xvfm'
 
 # Default from email (falls back to host user)
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or 'no-reply@rsvp_app.local')
+DEFAULT_FROM_EMAIL = 'neverreplyhim@gmail.com'
